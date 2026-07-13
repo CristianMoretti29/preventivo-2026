@@ -1,0 +1,307 @@
+:root {
+  color-scheme: light;
+  --bg: #f3f6f8;
+  --panel: #ffffff;
+  --text: #14212b;
+  --muted: #62717e;
+  --line: #d9e1e7;
+  --primary: #16324f;
+  --primary-2: #24577a;
+  --accent: #d7a73e;
+  --danger: #a92f2f;
+  --success: #1f7651;
+  --shadow: 0 10px 28px rgba(22, 50, 79, 0.08);
+  --radius: 18px;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--bg); }
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+button, input, select, textarea { font: inherit; }
+button, .button-like {
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 16px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  touch-action: manipulation;
+}
+button:active, .button-like:active { transform: translateY(1px); }
+button.secondary, .button-like.secondary { background: #e8eef2; color: var(--primary); }
+button.danger { background: #f8e4e4; color: var(--danger); }
+button.icon-button {
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  background: #f1f4f6;
+  color: var(--danger);
+  font-size: 20px;
+}
+.hidden { display: none !important; }
+
+.app-header {
+  padding: calc(24px + env(safe-area-inset-top)) 20px 24px;
+  background: linear-gradient(135deg, #16324f, #24577a);
+  color: #fff;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+.app-header h1 { margin: 2px 0 6px; font-size: clamp(28px, 6vw, 42px); }
+.app-header .subtitle { margin: 0; color: rgba(255,255,255,.78); }
+.app-header .eyebrow { color: #f3cf79; }
+
+.container {
+  width: min(1180px, calc(100% - 24px));
+  margin: -14px auto 40px;
+  position: relative;
+}
+.eyebrow {
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--primary-2);
+}
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.summary-card {
+  background: var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  min-height: 112px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.summary-card.primary { background: var(--primary); color: #fff; }
+.summary-card span { color: var(--muted); font-size: 14px; }
+.summary-card.primary span { color: rgba(255,255,255,.74); }
+.summary-card strong { font-size: clamp(22px, 4vw, 30px); }
+.summary-card small { color: var(--muted); }
+.summary-card.positive strong, .summary-card.positive small { color: var(--danger); }
+.summary-card.negative strong, .summary-card.negative small { color: var(--success); }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid rgba(217,225,231,.9);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.panel h2 { margin: 4px 0 0; }
+.panel-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.computed-contract { text-align: right; }
+.computed-contract span { display: block; color: var(--muted); font-size: 13px; }
+.computed-contract strong { font-size: 24px; color: var(--primary); }
+
+summary {
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 18px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 30px;
+}
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; color: var(--primary-2); font-size: 24px; }
+details[open] > summary::after { content: "−"; }
+details[open] > summary { margin-bottom: 16px; }
+.hint, .storage-note { color: var(--muted); line-height: 1.45; }
+
+.scenario-controls {
+  display: grid;
+  grid-template-columns: 1.4fr .7fr .7fr;
+  gap: 14px;
+  align-items: end;
+}
+fieldset {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  min-height: 58px;
+  padding: 8px 12px 12px;
+}
+fieldset legend { padding: 0 6px; color: var(--muted); font-size: 13px; font-weight: 700; }
+fieldset label { margin-right: 18px; font-weight: 700; }
+input[type="radio"], input[type="checkbox"] { accent-color: var(--primary); transform: scale(1.12); }
+.field { display: grid; gap: 6px; }
+.field > span { font-size: 13px; color: var(--muted); font-weight: 700; }
+input[type="text"], input[type="number"], select, textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #fbfcfd;
+  color: var(--text);
+  padding: 11px 12px;
+  min-height: 44px;
+  outline: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary-2);
+  box-shadow: 0 0 0 3px rgba(36,87,122,.12);
+}
+input[readonly] { background: #eef3f6; font-weight: 800; }
+textarea { resize: vertical; line-height: 1.45; }
+.contract-breakdown {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0,1fr));
+  gap: 10px;
+  margin-top: 14px;
+}
+.contract-breakdown > div {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px;
+}
+.contract-breakdown span { display: block; color: var(--muted); font-size: 12px; }
+.contract-breakdown strong { display: block; margin-top: 4px; }
+
+.expense-list, .contract-items, .units-list { display: grid; gap: 10px; }
+.expense-row {
+  display: grid;
+  grid-template-columns: minmax(210px, 1.5fr) minmax(120px, .6fr) minmax(120px, .6fr) minmax(220px, 1.2fr) 42px;
+  gap: 8px;
+  align-items: end;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.expense-row.computed { background: #f2f6f9; border-color: #b9cad6; }
+.expense-row .row-title { font-weight: 800; }
+.expense-row .mobile-label { display: none; }
+.row-actions { display: flex; justify-content: flex-end; }
+.section-add { margin-top: 10px; }
+
+.contract-item {
+  display: grid;
+  grid-template-columns: 44px minmax(220px, 1.6fr) minmax(130px, .6fr) minmax(220px, 1fr);
+  gap: 8px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+.contract-item.disabled { opacity: .62; background: #f7f7f7; }
+.contract-item.scenario-item { border-style: dashed; background: #f6f8fa; }
+.checkbox-wrap { display: flex; align-items: center; justify-content: center; min-height: 44px; }
+
+.unit-card {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px;
+}
+.unit-inputs {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(120px, .35fr) 42px;
+  gap: 8px;
+  align-items: end;
+}
+.unit-results {
+  margin-top: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 8px;
+}
+.unit-results > div { background: #f3f6f8; border-radius: 12px; padding: 12px; }
+.unit-results span { display: block; color: var(--muted); font-size: 12px; }
+.unit-results strong { display: block; margin-top: 4px; font-size: 18px; }
+.notes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.actions-grid { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 10px; }
+.install-help ol { line-height: 1.7; padding-left: 22px; }
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  transform: translateX(-50%) translateY(30px);
+  background: #132536;
+  color: #fff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition: .2s ease;
+  z-index: 10;
+  max-width: calc(100% - 32px);
+  text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@media (max-width: 900px) {
+  .summary-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .scenario-controls { grid-template-columns: 1fr 1fr; }
+  .scenario-controls fieldset { grid-column: 1 / -1; }
+  .expense-row { grid-template-columns: 1fr 1fr; }
+  .expense-row .name-field, .expense-row .note-field { grid-column: 1 / -1; }
+  .expense-row .row-actions { position: absolute; right: 28px; }
+  .expense-row { position: relative; padding-right: 56px; }
+  .contract-item { grid-template-columns: 44px 1fr 130px; }
+  .contract-item .note-field { grid-column: 2 / -1; }
+  .actions-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+@media (max-width: 620px) {
+  .app-header { display: block; padding-left: 16px; padding-right: 16px; }
+  .app-header button { margin-top: 14px; width: 100%; }
+  .container { width: min(100% - 16px, 1180px); margin-top: -10px; }
+  .summary-grid { gap: 8px; }
+  .summary-card { min-height: 98px; padding: 14px; }
+  .summary-card strong { font-size: 21px; }
+  .panel { padding: 14px; border-radius: 16px; }
+  .panel-heading { align-items: flex-start; }
+  .panel-heading .secondary { padding: 10px 12px; }
+  .computed-contract strong { font-size: 20px; }
+  .scenario-controls { grid-template-columns: 1fr; }
+  .scenario-controls fieldset { grid-column: auto; }
+  .contract-breakdown { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .expense-row { display: block; padding: 12px; }
+  .expense-row .field { margin-top: 9px; }
+  .expense-row .row-actions { top: 10px; right: 10px; }
+  .expense-row .name-field { padding-right: 44px; }
+  .expense-row .mobile-label { display: inline; }
+  .contract-item { grid-template-columns: 38px 1fr; }
+  .contract-item .amount-field, .contract-item .note-field { grid-column: 2; }
+  .unit-inputs { grid-template-columns: 1fr 110px 38px; }
+  .unit-results { grid-template-columns: 1fr; }
+  .notes-grid { grid-template-columns: 1fr; }
+  .actions-grid { grid-template-columns: 1fr; }
+  .actions-grid button, .actions-grid .button-like { width: 100%; }
+}
+
+@media print {
+  body { background: #fff; }
+  .app-header { background: #fff !important; color: #000; padding: 0 0 18px; }
+  .app-header .subtitle, .app-header .eyebrow { color: #444; }
+  .container { width: 100%; margin: 0; }
+  .panel, .summary-card { box-shadow: none; break-inside: avoid; }
+  .actions-panel, .install-help, #installButton, .section-add, .icon-button { display: none !important; }
+  details { display: block; }
+  details > * { display: block; }
+  summary::after { display: none; }
+  input, select, textarea { border: 0; background: transparent; padding: 0; min-height: auto; }
+}

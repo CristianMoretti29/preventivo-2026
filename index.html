@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#16324f">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Preventivo 2026">
+  <meta name="description" content="Simulatore del preventivo condominiale 2026, installabile su iPhone e utilizzabile offline.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Simulazione Preventivo 2026</title>
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <p class="eyebrow">Preventivo condominiale</p>
+      <h1>Simulazione 2026</h1>
+      <p class="subtitle">Calcoli collegati, salvataggio sul dispositivo e uso offline.</p>
+    </div>
+    <button id="installButton" class="secondary hidden" type="button">Installa app</button>
+  </header>
+
+  <main class="container">
+    <section class="summary-grid" aria-label="Riepilogo">
+      <article class="summary-card">
+        <span>Totale precedente</span>
+        <strong id="oldTotal">€ 0,00</strong>
+      </article>
+      <article class="summary-card primary">
+        <span>Totale nuovo</span>
+        <strong id="newTotal">€ 0,00</strong>
+      </article>
+      <article class="summary-card">
+        <span>Variazione</span>
+        <strong id="deltaTotal">€ 0,00</strong>
+        <small id="deltaPercent">0,00%</small>
+      </article>
+      <article class="summary-card">
+        <span>Spese una tantum</span>
+        <strong id="oneTimeTotal">€ 0,00</strong>
+      </article>
+    </section>
+
+    <section class="panel scenario-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Scenario contratto</p>
+          <h2>Techbau</h2>
+        </div>
+        <div class="computed-contract">
+          <span>Importo nel preventivo</span>
+          <strong id="contractTotal">€ 0,00</strong>
+        </div>
+      </div>
+
+      <div class="scenario-controls">
+        <fieldset>
+          <legend>Presidio fisso</legend>
+          <label><input type="radio" name="presidio" value="20"> 20 ore</label>
+          <label><input type="radio" name="presidio" value="40"> 40 ore</label>
+        </fieldset>
+
+        <label class="field">
+          <span>Sconto %</span>
+          <input id="discountRate" type="number" min="0" max="100" step="0.1" inputmode="decimal">
+        </label>
+
+        <label class="field">
+          <span>IVA</span>
+          <select id="vatRate">
+            <option value="10">10%</option>
+            <option value="22">22%</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="contract-breakdown">
+        <div><span>Lordo</span><strong id="contractGross">€ 0,00</strong></div>
+        <div><span>Sconto</span><strong id="contractDiscount">€ 0,00</strong></div>
+        <div><span>Imponibile</span><strong id="contractDiscounted">€ 0,00</strong></div>
+        <div><span>IVA</span><strong id="contractVat">€ 0,00</strong></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <details open>
+        <summary>Spese generali</summary>
+        <div id="generalExpenses" class="expense-list"></div>
+      </details>
+    </section>
+
+    <section class="panel">
+      <details open>
+        <summary>Spese di manutenzione e servizi</summary>
+        <div id="serviceExpenses" class="expense-list"></div>
+      </details>
+    </section>
+
+    <section class="panel">
+      <details open>
+        <summary>Consumi</summary>
+        <div id="consumptionExpenses" class="expense-list"></div>
+      </details>
+    </section>
+
+    <section class="panel">
+      <details>
+        <summary>Dettaglio contratto Techbau</summary>
+        <p class="hint">Le voci attive formano il totale lordo. Il presidio viene scelto nello scenario sopra.</p>
+        <div id="contractItems" class="contract-items"></div>
+      </details>
+    </section>
+
+    <section class="panel">
+      <details open>
+        <summary>Spese una tantum</summary>
+        <div id="oneTimeExpenses" class="expense-list"></div>
+      </details>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Ripartizione</p>
+          <h2>Quote per millesimi</h2>
+        </div>
+        <button id="addUnitButton" class="secondary" type="button">Aggiungi unità</button>
+      </div>
+      <p class="hint">La quota annuale è calcolata sul totale nuovo; la quota una tantum è separata.</p>
+      <div id="units" class="units-list"></div>
+    </section>
+
+    <section class="panel notes-panel">
+      <details>
+        <summary>Note del foglio originale</summary>
+        <div class="notes-grid">
+          <label class="field">
+            <span>Consumo idrico</span>
+            <textarea id="waterNote" rows="7"></textarea>
+          </label>
+          <label class="field">
+            <span>Consumo energia elettrica</span>
+            <textarea id="electricityNote" rows="9"></textarea>
+          </label>
+        </div>
+      </details>
+    </section>
+
+    <section class="panel actions-panel">
+      <h2>Dati e backup</h2>
+      <div class="actions-grid">
+        <button id="exportBackupButton" type="button">Esporta backup</button>
+        <label class="button-like" for="importBackupInput">Importa backup</label>
+        <input id="importBackupInput" type="file" accept="application/json,.json" hidden>
+        <button id="exportCsvButton" class="secondary" type="button">Esporta CSV</button>
+        <button id="printButton" class="secondary" type="button">Stampa / Salva PDF</button>
+        <button id="resetButton" class="danger" type="button">Ripristina dati Excel</button>
+      </div>
+      <p class="storage-note">I dati restano sul dispositivo. Il backup è indispensabile prima di cambiare iPhone o cancellare i dati di Safari.</p>
+    </section>
+
+    <section class="panel install-help">
+      <details>
+        <summary>Come installarla su iPhone</summary>
+        <ol>
+          <li>Pubblica questa cartella su un servizio HTTPS gratuito, ad esempio GitHub Pages.</li>
+          <li>Apri l’indirizzo con Safari su iPhone.</li>
+          <li>Tocca Condividi, poi <strong>Aggiungi alla schermata Home</strong>.</li>
+          <li>Dopo il primo caricamento, l’app funziona anche senza connessione.</li>
+        </ol>
+      </details>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script defer src="bundle.js"></script>
+</body>
+</html>
