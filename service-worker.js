@@ -1,9 +1,9 @@
-const CACHE_NAME = "preventivo-aurelia-2026-v5";
+const CACHE_NAME = "preventivo-aurelia-2026-v6";
 const APP_FILES = [
   "./",
   "./index.html",
   "./styles.css",
-  "./bundle.js?v=5",
+  "./bundle.js?v=6",
   "./manifest.webmanifest",
   "./logo-aurelia.png",
   "./apple-touch-icon.png",

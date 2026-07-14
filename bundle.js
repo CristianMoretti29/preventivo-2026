@@ -123,7 +123,8 @@ function calculateUnit(state, unit) {
   const millesimi = safeNumber(unit.millesimi);
   const annual = totals.newTotal / 1000 * millesimi;
   const oneTime = totals.oneTimeTotal / 1000 * millesimi;
-  return { millesimi, annual, oneTime, total: annual + oneTime };
+  const monthly = annual / 12;
+  return { millesimi, annual, oneTime, monthly };
 }
 
 function normalizeState(input) {
@@ -294,7 +295,7 @@ function renderUnits() {
       <div class="unit-results">
         <div><span>Quota annuale</span><strong data-unit-result="annual" data-unit-result-index="${index}">€ 0,00</strong></div>
         <div><span>Quota una tantum</span><strong data-unit-result="oneTime" data-unit-result-index="${index}">€ 0,00</strong></div>
-        <div><span>Totale complessivo</span><strong data-unit-result="total" data-unit-result-index="${index}">€ 0,00</strong></div>
+        <div><span>Spesa mensile</span><strong data-unit-result="monthly" data-unit-result-index="${index}">€ 0,00</strong></div>
       </div>
     </article>`).join("");
 }
@@ -322,7 +323,7 @@ function refreshCalculatedUI() {
 
   (state.units || []).forEach((unit, index) => {
     const result = calculateUnit(state, unit);
-    for (const field of ["annual", "oneTime", "total"]) {
+    for (const field of ["annual", "oneTime", "monthly"]) {
       const target = document.querySelector(`[data-unit-result="${field}"][data-unit-result-index="${index}"]`);
       if (target) target.textContent = euro.format(result[field]);
     }
@@ -404,10 +405,10 @@ function exportCsv() {
   }
 
   rows.push([], ["Totale OLD", totals.oldTotal], ["Totale NEW", totals.newTotal], ["Variazione", totals.delta]);
-  rows.push([], ["Unità", "Millesimi", "Quota annuale", "Quota una tantum", "Totale"]);
+  rows.push([], ["Unità", "Millesimi", "Quota annuale", "Quota una tantum", "Spesa mensile"]);
   for (const unit of state.units || []) {
     const result = calculateUnit(state, unit);
-    rows.push([unit.name, result.millesimi, result.annual, result.oneTime, result.total]);
+    rows.push([unit.name, result.millesimi, result.annual, result.oneTime, result.monthly]);
   }
 
   const csv = "\uFEFF" + rows.map(row => row.map(csvCell).join(";")).join("\r\n");

@@ -1,29 +1,15 @@
-PREVENTIVO 2026 — VERSIONE COMPLETA AURELIA v5
+AGGIORNAMENTO V6 — SPESA MENSILE
 
-Questa cartella contiene l'intera app pronta per GitHub Pages.
-La nuova immagine viene usata:
-- come logo nell'intestazione dell'app;
-- come icona su iPhone;
-- come icona PWA 192x192 e 512x512.
+Modifiche:
+- Nella sezione Quote per millesimi, "Totale complessivo" è sostituito da "Spesa mensile".
+- Spesa mensile = Quota annuale / 12.
+- La quota una tantum resta separata e non incide sulla spesa mensile.
+- L'esportazione CSV usa la nuova colonna Spesa mensile.
+- I dati già salvati nell'app restano invariati.
 
-FILE DA CARICARE SU GITHUB
+Su GitHub sostituire:
 - index.html
-- styles.css
 - bundle.js
-- manifest.webmanifest
 - service-worker.js
-- logo-aurelia.png
-- apple-touch-icon.png
-- icon-192.png
-- icon-512.png
 
-CARICAMENTO
-1. Nel repository preventivo-2026: Add file > Upload files.
-2. Trascinare tutti i file di questa cartella.
-3. Confermare Commit changes sul ramo main.
-4. Attendere il deployment di GitHub Pages.
-5. Prima di rimuovere la vecchia app, esportare un backup dei dati dall’app.
-6. Aprire: https://giuseppeassi29.github.io/preventivo-2026/?v=5
-7. Su iPhone rimuovere la vecchia icona dalla Home e aggiungere nuovamente l'app da Safari.
-
-La chiave di salvataggio non è stata cambiata, ma il backup resta comunque la precauzione corretta prima della reinstallazione.
+Dopo il deployment aprire il sito con ?v=6.
